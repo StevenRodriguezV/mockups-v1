@@ -3,7 +3,6 @@ import {
   Sparkles,
   Clock,
   Package,
-  BarChart2,
   AlertCircle,
   ArrowRight
 } from 'lucide-react';

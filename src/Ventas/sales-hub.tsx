@@ -6,26 +6,20 @@ import {
   Receipt,
   Clock,
   ShoppingCart,
-  RefreshCw,
+
   Sparkles,
   Percent,
   ArrowRight,
-  Smartphone,
+
   CreditCard,
-  Gift
+
 } from 'lucide-react';
 import { 
-  AreaChart, 
-  Area, 
-  BarChart,
-  Bar,
-  Cell,
-  XAxis, 
-  YAxis, 
+ 
   ResponsiveContainer,
   LineChart,
   Line,
-  Tooltip
+
 } from 'recharts';
 import SmartFeatures from './smart-features';
 import DigitalServices from './Servicios Digitales';
