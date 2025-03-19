@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import VendlyFooterNav from "@/Home_no-smart/vendly-footer-nav";
+import VendlyHeader from "@/Home_no-smart/vendly-header-final";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +29,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+         <div className="min-h-screen max-w-lg mx-auto mb-16">
+          <VendlyHeader/>
+          {children}
+          <VendlyFooterNav/>
+         </div>
+
       </body>
     </html>
   );

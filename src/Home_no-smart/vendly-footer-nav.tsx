@@ -1,5 +1,7 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { 
   Home,
   ShoppingBag,
@@ -9,8 +11,18 @@ import {
 } from 'lucide-react';
 
 const VendlyFooterNav = () => {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = useState('inicio');
   
+  // Actualiza el tab activo basado en la ruta actual
+  useEffect(() => {
+    if (pathname === '/home') setActiveTab('inicio');
+    else if (pathname === '/ventas') setActiveTab('ventas');
+    else if (pathname === '/inventario') setActiveTab('inventario');
+    else if (pathname === '/clientes') setActiveTab('clientes');
+    else if (pathname === '/negocio') setActiveTab('negocio');
+  }, [pathname]);
+
   const theme = {
     bg: '#F8FAFC',
     card: '#FFFFFF',
@@ -20,28 +32,30 @@ const VendlyFooterNav = () => {
   };
 
   const navigationItems = [
-    { id: 'inicio', icon: Home, label: 'Inicio' },
-    { id: 'ventas', icon: ShoppingBag, label: 'Ventas' },
-    { id: 'inventario', icon: Package, label: 'Inventario' },
-    { id: 'clientes', icon: Users, label: 'Clientes' },
-    { id: 'negocio', icon: BarChart2, label: 'Negocio' }
+    { id: 'inicio', icon: Home, label: 'Inicio', route: "/home" },
+    { id: 'ventas', icon: ShoppingBag, label: 'Ventas', route: "/ventas" },
+    { id: 'inventario', icon: Package, label: 'Inventario', route: "/inventario" },
+    { id: 'clientes', icon: Users, label: 'Clientes', route: "/clientes"},
+    { id: 'negocio', icon: BarChart2, label: 'Negocio', route: "/negocio" }
   ];
 
   return (
     <div className="fixed bottom-0 left-0 right-0 border-t" 
       style={{ backgroundColor: theme.card, borderColor: theme.border }}>
       <div className="flex justify-between max-w-lg mx-auto">
-        {navigationItems.map(({ id, icon: Icon, label }) => {
+        {navigationItems.map(({ id, icon: Icon, label, route }) => {
           const isActive = activeTab === id;
           return (
-            <button
+            <Link
               key={id}
-              onClick={() => setActiveTab(id)}
+              href={route}
               className="flex-1 flex flex-col items-center py-2 px-2"
+              onClick={() => setActiveTab(id)}
               style={{ 
                 backgroundColor: isActive ? `${theme.primary}15` : 'transparent',
                 color: isActive ? theme.primary : theme.textSecondary,
-                transition: 'all 0.2s ease'
+                transition: 'all 0.2s ease',
+                textDecoration: 'none'
               }}
             >
               <Icon 
@@ -60,7 +74,7 @@ const VendlyFooterNav = () => {
               >
                 {label}
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>

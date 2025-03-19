@@ -24,7 +24,7 @@ const VendlyHeader = () => {
   };
 
   return (
-    <div className="sticky top-0 z-10 border-b" 
+    <div className=" top-0 z-10 border-b" 
       style={{ backgroundColor: theme.bg, borderColor: theme.border }}>
       <div className="px-4 py-3">
         {/* Top Row: Logo + Actions */}
@@ -104,7 +104,7 @@ const VendlyHeader = () => {
         {/* Bottom Row: Welcome Text */}
         <div className="flex items-center gap-3 mt-3">
           <p className="text-lg" style={{ color: theme.textSecondary }}>
-            ¡Hola, Juan!
+            ¡Hola, Steven!
           </p>
           <div 
             className="px-3 py-1 rounded-lg text-sm font-medium transition-colors duration-200 hover:bg-opacity-80"
