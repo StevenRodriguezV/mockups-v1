@@ -1,8 +1,10 @@
 
+import InventoryHub from "@/Inventario/inventory-hub";
+
 export default function inventarioPage() {
   return (
     <div>
-       <h1>inventario</h1>
+       <InventoryHub/>
     </div>
   );
 }
