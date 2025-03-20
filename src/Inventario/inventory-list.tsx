@@ -3,7 +3,6 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Search, 
   Package,
-  Filter,
   Clock,
   FileText,
   ChevronRight,
