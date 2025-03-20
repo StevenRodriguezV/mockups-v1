@@ -362,15 +362,18 @@ const InventoryHub: React.FC = () => {
       </div>
     
     )}
-      {ShowProduct && (
-        <div className="fixed inset-0 z-50">
-          <OptimizedFilterInventory onClose={() => setShowProduct(false)} />
-          <button 
-            className="fixed top-4 right-4 p-2 bg-white rounded-full shadow-lg z-[60]"
-            onClick={() => setShowProduct(false)}
-          >
-            <X className="w-6 h-6" />
-          </button>
+     {ShowProduct && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-100">
+          {/* Contenedor con overflow y altura 100% */}
+          <div className="relative w-full h-full overflow-y-auto">
+            <OptimizedFilterInventory onClose={() => setShowProduct(false)} />
+            <button 
+              className="fixed top-4 right-4 p-2 bg-white rounded-full shadow-lg z-[60]"
+              onClick={() => setShowProduct(false)}
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </div>
       )}
       

@@ -275,8 +275,9 @@ const OptimizedFilterInventory: React.FC<OptimizedFilterInventoryProps> = ({ onC
     const { icon: Icon } = productTypes[type];
     
     return (
-      <div
-        className="product-card bg-white rounded-lg shadow-sm p-4 flex items-center cursor-pointer border border-gray-100 hover:border-indigo-200"
+      <div className='' >
+        <div
+        className="product-card bg-white rounded-lg shadow-sm p-2 flex items-center cursor-pointer border border-gray-100 hover:border-indigo-200"
         style={{ 
           opacity: 1, 
           transition: "all 0.3s ease",
@@ -333,6 +334,7 @@ const OptimizedFilterInventory: React.FC<OptimizedFilterInventoryProps> = ({ onC
           </span>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
+      </div>
       </div>
     );
   };
@@ -812,139 +814,138 @@ const OptimizedFilterInventory: React.FC<OptimizedFilterInventoryProps> = ({ onC
           </button>
         </div>
       </div>
-
-      {/* Product List */}
-      <div className="p-4 pb-24">
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-lg shadow-sm border border-gray-100 mt-4">
-            <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <p className="text-gray-500 mb-4">
-              No se encontraron productos que coincidan con los filtros
+{/* Product List - Corregido para permitir desplazamiento */}
+<div className="p-4 pb-24 overflow-y-auto flex-1">
+    {filteredProducts.length === 0 ? (
+      <div className="text-center py-16 bg-white rounded-lg shadow-sm border border-gray-100 mt-4">
+        <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+        <p className="text-gray-500 mb-4">
+          No se encontraron productos que coincidan con los filtros
+        </p>
+        <button
+          onClick={clearAllFilters}
+          className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+        >
+          Limpiar filtros
+        </button>
+      </div>
+    ) : (
+      <div className="h-full overflow-y-auto">
+        {/* Results Count with Performance Indicator */}
+        <div className="flex justify-between items-center mb-4 px-1">
+          <div className="flex items-center gap-2">
+            <p className="text-sm text-gray-600">
+              {filteredProducts.length} {filteredProducts.length === 1 ? 'producto' : 'productos'} encontrados
             </p>
-            <button
-              onClick={clearAllFilters}
-              className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
-            >
-              Limpiar filtros
-            </button>
+            {filteredProducts.length < products.length / 2 && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">
+                Filtro eficiente
+              </span>
+            )}
           </div>
-        ) : (
-          <div>
-            {/* Results Count with Performance Indicator */}
-            <div className="flex justify-between items-center mb-4 px-1">
-              <div className="flex items-center gap-2">
-                <p className="text-sm text-gray-600">
-                  {filteredProducts.length} {filteredProducts.length === 1 ? 'producto' : 'productos'} encontrados
-                </p>
-                {filteredProducts.length < products.length / 2 && (
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100">
-                    Filtro eficiente
-                  </span>
-                )}
-              </div>
+          
+          <div className="flex gap-2 text-xs text-gray-500">
+            {['physical', 'service', 'digital'].map(type => {
+              const count = filteredProducts.filter(p => p.type === type).length;
+              if (count === 0) return null;
               
-              <div className="flex gap-2 text-xs text-gray-500">
-                {['physical', 'service', 'digital'].map(type => {
-                  const count = filteredProducts.filter(p => p.type === type).length;
-                  if (count === 0) return null;
-                  
-                  return (
-                    <span key={type} className="flex items-center gap-1">
-                      {count} {productTypes[type].label.toLowerCase()}
-                      {count !== 1 && 's'}
-                    </span>
-                  );
-                })}
-              </div>
+              return (
+                <span key={type} className="flex items-center gap-1">
+                  {count} {productTypes[type].label.toLowerCase()}
+                  {count !== 1 && 's'}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+        
+        {/* Physical Products Section */}
+        {filteredProducts.some(product => product.type === 'physical') && (
+          <div 
+            className="mb-6"
+            key={`physical-${filters.type}-${filters.category}-${filters.stock}-${searchQuery}`}
+          >
+            <h3 className="text-sm font-medium uppercase text-gray-500 mb-3 px-1">
+              Productos Físicos
+            </h3>
+            <div className="space-y-3">
+              {filteredProducts
+                .filter(product => product.type === 'physical')
+                .map((product, index) => (
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    type="physical"
+                    index={index}
+                  />
+                ))}
             </div>
-            
-            {/* Physical Products Section */}
-            {filteredProducts.some(product => product.type === 'physical') && (
-              <div 
-                className="mb-6"
-                key={`physical-${filters.type}-${filters.category}-${filters.stock}-${searchQuery}`}
-              >
-                <h3 className="text-sm font-medium uppercase text-gray-500 mb-3 px-1">
-                  Productos Físicos
-                </h3>
-                <div className="space-y-3">
-                  {filteredProducts
-                    .filter(product => product.type === 'physical')
-                    .map((product, index) => (
-                      <ProductCard 
-                        key={product.id} 
-                        product={product} 
-                        type="physical"
-                        index={index}
-                      />
-                    ))}
-                </div>
-              </div>
-            )}
-            
-            {/* Services Section */}
-            {filteredProducts.some(product => product.type === 'service') && (
-              <div 
-                className="mb-6"
-                key={`service-${filters.type}-${filters.category}-${filters.stock}-${searchQuery}`}
-              >
-                <h3 className="text-sm font-medium uppercase text-gray-500 mb-3 px-1">
-                  Servicios
-                </h3>
-                <div className="space-y-3">
-                  {filteredProducts
-                    .filter(product => product.type === 'service')
-                    .map((product, index) => (
-                      <ProductCard 
-                        key={product.id} 
-                        product={product} 
-                        type="service"
-                        index={index} 
-                      />
-                    ))}
-                </div>
-              </div>
-            )}
-            
-            {/* Digital Products Section */}
-            {filteredProducts.some(product => product.type === 'digital') && (
-              <div 
-                className="mb-6"
-                key={`digital-${filters.type}-${filters.category}-${filters.stock}-${searchQuery}`}
-              >
-                <h3 className="text-sm font-medium uppercase text-gray-500 mb-3 px-1">
-                  Productos Digitales
-                </h3>
-                <div className="space-y-3">
-                  {filteredProducts
-                    .filter(product => product.type === 'digital')
-                    .map((product, index) => (
-                      <ProductCard 
-                        key={product.id} 
-                        product={product} 
-                        type="digital"
-                        index={index} 
-                      />
-                    ))}
-                </div>
-              </div>
-            )}
           </div>
         )}
         
-        {/* Create Product Button (At the bottom of the content) */}
-        <div className="mt-6">
-          <button
-            className="button-grow w-full py-4 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-md hover:bg-indigo-700 transition-colors"
-            onClick={() => {
-              setIsCreatingProduct(true);
-            }}
+        {/* Services Section */}
+        {filteredProducts.some(product => product.type === 'service') && (
+          <div 
+            className="mb-6"
+            key={`service-${filters.type}-${filters.category}-${filters.stock}-${searchQuery}`}
           >
-            <Plus className="w-5 h-5 mr-2" />
-            <span className="font-medium">Crear Producto</span>
-          </button>
-        </div>
+            <h3 className="text-sm font-medium uppercase text-gray-500 mb-3 px-1">
+              Servicios
+            </h3>
+            <div className="space-y-3">
+              {filteredProducts
+                .filter(product => product.type === 'service')
+                .map((product, index) => (
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    type="service"
+                    index={index} 
+                  />
+                ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Digital Products Section */}
+        {filteredProducts.some(product => product.type === 'digital') && (
+          <div 
+            className="mb-6"
+            key={`digital-${filters.type}-${filters.category}-${filters.stock}-${searchQuery}`}
+          >
+            <h3 className="text-sm font-medium uppercase text-gray-500 mb-3 px-1">
+              Productos Digitales
+            </h3>
+            <div className="space-y-3">
+              {filteredProducts
+                .filter(product => product.type === 'digital')
+                .map((product, index) => (
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    type="digital"
+                    index={index} 
+                  />
+                ))}
+            </div>
+          </div>
+        )}
       </div>
+    )}
+    
+    {/* Create Product Button (At the bottom of the content) */}
+    <div className="mt-6">
+      <button
+        className="button-grow w-full py-4 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-md hover:bg-indigo-700 transition-colors"
+        onClick={() => {
+          setIsCreatingProduct(true);
+        }}
+      >
+        <Plus className="w-5 h-5 mr-2" />
+        <span className="font-medium">Crear Producto</span>
+      </button>
+    </div>
+  </div>
 
       {/* Floating scroll-to-top button that appears when scrolling down */}
       <button
