@@ -154,17 +154,7 @@ const SalesHub = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: theme.bg }}>
-      {/* Header */}
-      <div className="sticky top-0 z-10 border-b p-4" style={{ backgroundColor: theme.bg, borderColor: theme.border }}>
-        <button
-          className="w-full p-4 rounded-xl text-white flex items-center justify-center gap-2"
-          style={{ backgroundColor: theme.primary }}
-        >
-          <Plus className="w-6 h-6" />
-          <span className="text-lg font-medium">Nueva Venta</span>
-        </button>
-      </div>
-
+    
       <div className="p-4 space-y-4 pb-20">
         {/* Sync Status */}
         <div className="px-4 py-2 -mx-4 flex items-center justify-between border-b"

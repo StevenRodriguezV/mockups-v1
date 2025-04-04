@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import VendlyFooterNav from "@/Home_no-smart/vendly-footer-nav";
-import VendlyHeader from "@/Home_no-smart/vendly-header-final";
+import VendlyHeader from "@/Header-s/enhanced-header-search";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

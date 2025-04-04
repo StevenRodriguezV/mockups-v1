@@ -377,46 +377,7 @@ const InventoryHub: React.FC = () => {
         </div>
       )}
       
-      {/* Header Area */}
-      <div className="sticky top-0 z-10 border-b" 
-        style={{ backgroundColor: theme.bg, borderColor: theme.border }}>
-        
-        {/* Search Bar and Quick Actions */}
-        <div className="px-4 py-3">
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <Search 
-                className="absolute left-3 top-3 w-5 h-5" 
-                style={{ color: theme.textSecondary }} 
-              />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar productos, categorías..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl"
-                style={{ 
-                  backgroundColor: theme.card,
-                  border: `1px solid ${theme.border}`,
-                  color: theme.text
-                }}
-              />
-            </div>
-            <button 
-              className="p-3 rounded-xl"
-              style={{ backgroundColor: theme.accent }}
-            >
-              <Barcode className="w-6 h-6 text-white" />
-            </button>
-            <button 
-              className="p-3 rounded-xl"
-              style={{ backgroundColor: theme.card, border: `1px solid ${theme.border}` }}
-            >
-              <Upload className="w-6 h-6" style={{ color: theme.textSecondary }} />
-            </button>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Sync Status */}
       <div className="px-4 py-2 flex items-center justify-between border-b"
